@@ -1,4 +1,10 @@
 
+class ShopCar {
+
+  List<GoodItem> list = [];
+  double total = 0.0;
+}
+
 
 class GoodList {
 
