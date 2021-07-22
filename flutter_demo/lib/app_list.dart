@@ -20,7 +20,6 @@ class AppListSample extends StatelessWidget {
 }
 
 class SampleAppPage extends StatefulWidget {
-  SampleAppPage({Key key}) : super(key: key);
 
   @override
   _SampleAppPageState createState() => _SampleAppPageState();
@@ -57,7 +56,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
 
   loadData() async {
     String dataURL = "https://jsonplaceholder.typicode.com/posts";
-    http.Response response = await http.get(dataURL);
+    http.Response response = await http.get(Uri(path: dataURL));
     setState(() {
       widgets = jsonDecode(response.body);
     });
