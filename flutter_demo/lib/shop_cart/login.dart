@@ -24,12 +24,14 @@ class Login extends StatelessWidget {
             children: [
               Text("welcome", style: Theme.of(context).textTheme.headline1,),
               TextFormField(
+                initialValue: name,
                 decoration: InputDecoration(hintText: "input name"),
                 onChanged: (text) {
                   name = text;
                 },
               ),
               TextFormField(
+                initialValue: pwd,
                 decoration: InputDecoration(hintText: "input pwd"),
                 obscureText: true,
                 onChanged: (text) {
@@ -38,14 +40,14 @@ class Login extends StatelessWidget {
               ),
               SizedBox(height: 30,),
               ElevatedButton(onPressed: (){
-                var check = name != null && name!.isNotEmpty;
+                var check = (name != null && name!.isNotEmpty);
                 // Toast.show("msg", context, duration: 2, gravity: 0);
                 if (!check) {
                   showToast("please input name", context: context);
                   // Fluttertoast.showToast(msg: "please input name");
                   return;
                 }
-                check = pwd != null && pwd!.isNotEmpty;
+                check = (pwd != null && pwd!.isNotEmpty);
                 if (!check) {
                   showToast("please input pwd");
                   // Fluttertoast.showToast(msg: "please input pwd");

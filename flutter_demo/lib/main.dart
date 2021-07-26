@@ -8,10 +8,11 @@ import 'app_random_words.dart';
 import 'app_chat.dart';
 // import 'package:json_annotation/json_annotation.dart';
 // import 'package:json_serializable/json_serializable.dart';
+import 'layout_demo.dart';
 
 void main() {
 
-  runApp(MyShop());
+  runApp(LayoutSamples());
 }
 
 class MyApp extends StatelessWidget {
