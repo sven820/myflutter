@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="plugin_jxf_demo" type="FlutterRunConfigurationType" factoryName="Flutter">
+    <option name="filePath" value="$PROJECT_DIR$/flutter_plugin_jxf_demo/example/lib/main.dart" />
+    <method v="2" />
+  </configuration>
+</component>

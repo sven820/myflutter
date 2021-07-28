@@ -9,15 +9,34 @@ import 'app_chat.dart';
 // import 'package:json_annotation/json_annotation.dart';
 // import 'package:json_serializable/json_serializable.dart';
 import 'layout_demo.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_package_jxf_demo/flutter_package_jxf_demo.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:flutter_plugin_jxf_demo/flutter_plugin_jxf_demo.dart';
+
 
 void main() {
 
-  runApp(LayoutSamples());
+  runApp(MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
+
+
+  var calculator = Calculator();
+
+  getPlatformVersion() async {
+    var version = await FlutterPluginJxfDemo.platformVersion;
+    print("version: $version");
+    var level = await FlutterPluginJxfDemo.batteryLevel;
+    print("level: $level");
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    getPlatformVersion();
 
     return MaterialApp(
       title: "appTitle",
@@ -26,7 +45,8 @@ class MyApp extends StatelessWidget {
         "/second": (context)=>SecondPage("default"),
         "/image": (context)=>ImagePage(),
       },
-      onGenerateRoute: (RouteSettings settings){ //如果路由表中没有注册，才会调用
+      onGenerateRoute: (RouteSettings settings){ //如果路由
+        // 表中没有注册，才会调用
         return MaterialPageRoute(builder: (context){
           String? name = settings.name;
           print(name);
@@ -35,6 +55,66 @@ class MyApp extends StatelessWidget {
       },
       home: DemoPage(),
     );
+  }
+}
+
+
+class BuildRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return streamBuild();
+  }
+
+  Widget streamBuild() {
+    return StreamBuilder<int>(
+      stream: counter(), //
+      //initialData: ,// a Stream<int> or null
+      builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+        if (snapshot.hasError)
+          return Text('Error: ${snapshot.error}');
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+            return Text('没有Stream');
+          case ConnectionState.waiting:
+            return Text('等待数据...');
+          case ConnectionState.active:
+            return Text('active: ${snapshot.data}');
+          case ConnectionState.done:
+            return Text('Stream已关闭');
+        }
+      },
+    );
+  }
+  Stream<int> counter() {
+    return Stream.periodic(Duration(seconds: 1), (i) {
+      return i;
+    });
+  }
+
+  Widget futureBuide() {
+    return Center(
+      child: FutureBuilder<String>(
+        future: mockNetworkData(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          // 请求已结束
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              // 请求失败，显示错误
+              return Text("Error: ${snapshot.error}");
+            } else {
+              // 请求成功，显示数据
+              return Text("Contents: ${snapshot.data}");
+            }
+          } else {
+            // 请求未结束，显示loading
+            return CircularProgressIndicator();
+          }
+        },
+      ),
+    );
+  }
+  Future<String> mockNetworkData() async {
+    return Future.delayed(Duration(seconds: 2), () => "我是从互联网上获取的数据");
   }
 }
 
@@ -86,7 +166,7 @@ class DemoPageState extends State<DemoPage> {
           Navigator.pushNamed(context, "/jxf");
         }, child: Text("test onGenerateRoute")),
         TextButton(onPressed: (){
-          Navigator.pushNamed(context, "/image", arguments: "images/hefei_guihua");
+          Navigator.pushNamed(context, "/image", arguments: "resource/images/hefei_guihua");
         }, child: Text("open image")),
       ]),
       floatingActionButton: FloatingActionButton(
